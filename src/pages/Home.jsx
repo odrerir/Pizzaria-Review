@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import PizzariaCard from '../components/PizzariaCard';
+
+import {PizzariaCard} from '../components/PizzariaCard';
 import { storageService } from '../services/storageService';
+
+import styles from '../pages/Home.module.css';
 
 export function Home() {
   const [pizzarias, setPizzarias] = useState([]);
@@ -13,8 +16,10 @@ export function Home() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Pizzarias</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <header>
+        <h1 className={styles.titulo}>Pizzarias</h1>
+      </header>
+      <div className={styles.pizzarias}>
         {pizzarias.map(pizzaria => (
           <PizzariaCard key={pizzaria.id} pizzaria={pizzaria} />
         ))}

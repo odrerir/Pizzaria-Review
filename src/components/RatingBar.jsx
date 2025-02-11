@@ -1,4 +1,4 @@
-function RatingBar({ label, value }) {
+export function RatingBar({ label, value }) {
   const percentage = (value / 5) * 100;
 
   return (
@@ -14,5 +14,3 @@ function RatingBar({ label, value }) {
     </div>
   );
 }
-
-export default RatingBar;

@@ -1,0 +1,153 @@
+/* CONTAINER PRINCIPAL */
+.container {
+  max-width: 56rem; /* 896px */
+  margin: 0 auto;
+  padding: 1rem; /* 16px */
+}
+
+/* TELA DE LOADING */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.load {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* MENSAGEM DE ERRO */
+.errorMessage {
+  text-align: center;
+  color: #dc2626; /* Red-600 */
+}
+
+.errorText {
+  font-size: 1.25rem; /* Text-xl */
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.backButton {
+  color: #2563eb; /* Blue-600 */
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+/* BOTÃO VOLTAR */
+.goBack {
+  margin-bottom: 1rem;
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+/* CARD PRINCIPAL */
+.card {
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* IMAGEM DA PIZZARIA */
+.image {
+  width: 100%;
+  height: 16rem; /* 256px */
+  object-fit: cover;
+}
+
+/* CONTEÚDO DO CARD */
+.content {
+  padding: 1.5rem;
+}
+
+/* CABEÇALHO (NOME E AVALIAÇÃO) */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 1.875rem; /* 3xl */
+  font-weight: bold;
+}
+
+/* MÉDIA DE AVALIAÇÃO */
+.rating {
+  text-align: center;
+}
+
+.ratingNumber {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.ratingText {
+  font-size: 0.875rem;
+  color: #6b7280; /* Gray-500 */
+}
+
+/* ENDEREÇO */
+.address {
+  color: #4b5563; /* Gray-600 */
+  margin-top: 0.5rem;
+}
+
+/* SEÇÃO DE INFORMAÇÕES E AVALIAÇÕES */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+/* Para telas médias (md) */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* TÍTULOS DAS SEÇÕES */
+.sectionTitle {
+  font-size: 1.25rem; /* Text-xl */
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* ESPAÇAMENTO ENTRE ITENS */
+.spaceY > * + * {
+  margin-top: 1rem;
+}
+
+/* SUBTÍTULOS */
+.subTitle {
+  font-weight: bold;
+  color: #374151; /* Gray-700 */
+}
+
+/* TEXTOS GERAIS */
+.text {
+  color: #4b5563; /* Gray-600 */
+}
+
+/* LISTA DE PONTOS FORTES */
+.list {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  color: #4b5563;
+}

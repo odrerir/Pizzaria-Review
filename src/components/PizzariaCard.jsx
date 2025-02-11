@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 
-function PizzariaCard({ pizzaria }) {
+export function PizzariaCard({ pizzaria }) {
   return (
     <div className="border rounded-lg p-4 shadow-lg">
       <img src={pizzaria.imagem} alt={pizzaria.nome} className="w-full h-48 object-cover rounded" />
@@ -16,5 +16,3 @@ function PizzariaCard({ pizzaria }) {
     </div>
   );
 }
-
-export default PizzariaCard;

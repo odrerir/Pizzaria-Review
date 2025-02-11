@@ -1,0 +1,25 @@
+/* NAVEGAÇÃO PRINCIPAL */
+.navbar {
+  background-color: #2d3748; /* bg-gray-800 */
+  color: white;
+  padding: 1rem; /* p-4 */
+}
+
+/* CONTAINER DA NAVEGAÇÃO */
+.navbar-container {
+  max-width: 56rem; /* max-w-4xl */
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem; /* gap-4 */
+}
+
+/* LINKS DE NAVEGAÇÃO */
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-link:hover {
+  color: #63b3ed; /* text-blue-300 (hover) */
+}

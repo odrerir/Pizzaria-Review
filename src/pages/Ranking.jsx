@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import { storageService } from '../services/storageService';
-import RatingBar from '../components/RatingBar';
+import {RatingBar} from '../components/RatingBar';
+
+import styles from '../styles/Ranking.module.css';
 
 export function Ranking() {
   const [pizzarias, setPizzarias] = useState([]);
@@ -14,37 +17,37 @@ export function Ranking() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Ranking de Pizzarias</h1>
-      <div className="space-y-4">
+    <div className={styles.container}>
+      <h1 className={styles.title}>Ranking de Pizzarias</h1>
+      <div className={styles.pizzariaList}>
         {pizzarias.map((pizzaria, index) => (
-          <div key={pizzaria.id} className="bg-white shadow-lg rounded-lg p-4">
+          <div key={pizzaria.id} className={styles.pizzariaCard}>
             <div className="flex items-center gap-4">
-              <span className="text-2xl font-bold w-12">{index + 1}º</span>
+              <span className={styles.pizzariaIndex}>{index + 1}º</span>
               <img
                 src={pizzaria.imagem}
                 alt={pizzaria.nome}
-                className="w-24 h-24 object-cover rounded-lg"
+                className={styles.pizzariaImage}
               />
-              <div className="flex-1">
+              <div className={styles.pizzariaDetails}>
                 <Link
                   to={`/pizzaria/${pizzaria.id}`}
-                  className="text-xl font-bold hover:text-blue-600"
+                  className={styles.pizzariaLink}
                 >
                   {pizzaria.nome}
                 </Link>
-                <div className="mt-2 space-y-1">
+                <div className={styles.pizzariaRatings}>
                   <RatingBar label="Massa" value={pizzaria.avaliacao.massa} />
                   <RatingBar label="Recheio" value={pizzaria.avaliacao.recheio} />
                   <RatingBar label="Tempero" value={pizzaria.avaliacao.tempero} />
                   <RatingBar label="Preço" value={pizzaria.avaliacao.preco} />
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">
+              <div className={styles.generalRating}>
+                <div className={styles.ratingValue}>
                   {pizzaria.mediaGeral.toFixed(1)}
                 </div>
-                <div className="text-sm text-gray-500">Média Geral</div>
+                <div className={styles.ratingLabel}>Média Geral</div>
               </div>
             </div>
           </div>

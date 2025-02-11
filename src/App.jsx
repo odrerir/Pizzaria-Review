@@ -1,14 +1,23 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Admin } from './pages/Admin';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { storageService } from './services/storageService';
+import {Home} from './pages/Home';
+
+import './App.css';
+
+storageService.initializeStorage();
 
 function App() {
   return (
     <Router>
-      <nav className="bg-gray-800 text-white p-4">
-        <div className="max-w-4xl mx-auto flex gap-4">
-          <Link to="/">Home</Link>
-          <Link to="/ranking">Ranking</Link>
-          <Link to="/admin">Adicionar Pizzaria</Link>
+      <nav className="navbar">
+        <div className="navbar-container">
+          <Link to="/" className="navbar-link">Home</Link>
+          <Link to="/ranking" className="navbar-link">Ranking</Link>
+          <Link to="/admin" className="navbar-link">Adicionar Pizzaria</Link>
         </div>
       </nav>
 
@@ -19,9 +28,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Admin from './pages/Admin';
+export default App;
