@@ -1,224 +1,204 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PizzariaService } from '../services/PizzariaService';
+import styles from '../styles/Admin.module.css';
 
 export function Admin() {
   const navigate = useNavigate();
+
+  // Estado para armazenar os dados do formulário
   const [formData, setFormData] = useState({
     nome: '',
     endereco: '',
-    imagem: '',
+    imagem: null,
     descricao: '',
-    horarioFuncionamento: '',
+    horarioDeFuncionamento: '',
     contato: '',
     pontosFortes: '',
-    avaliacao: {
-      massa: 0,
-      recheio: 0,
-      tempero: 0,
-      preco: 0
-    }
+    avaliacao: { massa: '', recheio: '', tempero: '', preco: '' },
+    aplicativo: { ifood: false, rappi: false, uberEats: false, aiqFome: false, outro: false, nenhum: false }
   });
 
+  // Estado para armazenar mensagens de erro
+  const [errors, setErrors] = useState({});
+
+  // Função para lidar com as mudanças nos campos do formulário
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name.includes('avaliacao.')) {
+    const { name, value, type, checked, files } = e.target;
+
+    if (type === 'file' && files.length > 0) {
+      // Atualiza a imagem no formData
+      setFormData(prev => ({
+        ...prev,
+        imagem: files[0]
+      }));
+    } else if (type === 'checkbox') {
+      // Atualiza os aplicativos de entrega
+      const [parent, field] = name.split('.');
+      if (parent === 'aplicativo') {
+        setFormData(prev => ({
+          ...prev,
+          aplicativo: { ...prev.aplicativo, [field]: checked }
+        }));
+      }
+      setFormData(prev => ({
+        ...prev,
+        aplicativo: { ...prev.aplicativo, [field]: checked }
+      }));
+    } else if (name.startsWith('avaliacao.')) {
+      // Atualiza as notas de avaliação
       const field = name.split('.')[1];
-      setFormData({
-        ...formData,
-        avaliacao: {
-          ...formData.avaliacao,
-          [field]: Number(value)
-        }
-      });
+      setFormData(prev => ({
+        ...prev,
+        avaliacao: { ...prev.avaliacao, [field]: value }
+      }));
     } else {
-      setFormData({
-        ...formData,
+      // Atualiza os campos gerais
+      setFormData(prev => ({
+        ...prev,
         [name]: value
-      });
+      }));
     }
   };
 
-  const handleSubmit = (e) => {
+  // Validação do formulário antes do envio
+  const validateForm = () => {
+    let formErrors = {};
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        // Valida os campos aninhados (avaliacao e aplicativo)
+        Object.entries(value).forEach(([subKey, subValue]) => {
+          if (key === 'avaliacao' && (subValue === '' || subValue < 0 || subValue > 5)) {
+            formErrors[`${key}.${subKey}`] = 'A nota deve ser entre 0 e 5';
+          }
+        });
+      } else if (key !== 'imagem' && !value) {
+        formErrors[key] = 'Campo obrigatório';
+      }
+    });
+
+    if (!formData.imagem) {
+      formErrors.imagem = 'Imagem é obrigatória';
+    }
+
+    return formErrors;
+  };
+
+  // Função para enviar o formulário
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const formErrors = validateForm();
 
-    // Calcula a média geral
-    const valores = Object.values(formData.avaliacao);
-    const mediaGeral = valores.reduce((a, b) => a + b, 0) / valores.length;
+    // Se houver erros, exibe-os e impede o envio
+    if (Object.keys(formErrors).length) return setErrors(formErrors);
 
-    const novaPizzaria = {
-      ...formData,
-      id: Date.now(), // ID temporário
-      mediaGeral,
-      pontosFortes: formData.pontosFortes.split(',').map(ponto => ponto.trim())
-    };
+    // Criação do objeto FormData para envio dos dados
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (typeof value === 'object' && !Array.isArray(value) && key !== 'imagem') {
+        Object.entries(value).forEach(([subKey, subValue]) => {
+          data.append(`${key}.${subKey}`, subValue);
+        });
+      } else {
+        data.append(key, value);
+      }
+    });
 
-    // Aqui você adicionaria a lógica para salvar no backend
-    // Por enquanto, vamos salvar no localStorage
-    const pizzariasAtuais = JSON.parse(localStorage.getItem('pizzarias') || '[]');
-    localStorage.setItem('pizzarias', JSON.stringify([...pizzariasAtuais, novaPizzaria]));
+    try {
+      const response = await PizzariaService.adicionarPizzaria(data);
+      alert(response.success ? 'Pizzaria adicionada com sucesso!' : `Erro: ${response.error}`);
 
-    alert('Pizzaria adicionada com sucesso!');
-    navigate('/');
+      // Se a pizzaria foi adicionada com sucesso, redireciona para a página inicial
+      if (response.success) navigate('/');
+    } catch (error) {
+      alert(`Erro ao enviar os dados: ${error.message}`);
+    }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Adicionar Nova Pizzaria</h1>
+      <div className={styles.form}>
+        <h1 className={styles.formHeader}>Adicionar Pizzaria</h1>
+        <form onSubmit={handleSubmit} className={styles.formContainer} encType="multipart/form-data">
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1">Nome da Pizzaria</label>
-          <input
-            type="text"
-            name="nome"
-            value={formData.nome}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Endereço</label>
-          <input
-            type="text"
-            name="endereco"
-            value={formData.endereco}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">URL da Imagem</label>
-          <input
-            type="url"
-            name="imagem"
-            value={formData.imagem}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Descrição</label>
-          <textarea
-            name="descricao"
-            value={formData.descricao}
-            onChange={handleChange}
-            className="w-full p-2 border rounded h-32"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Horário de Funcionamento</label>
-          <input
-            type="text"
-            name="horarioFuncionamento"
-            value={formData.horarioFuncionamento}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Contato</label>
-          <input
-            type="text"
-            name="contato"
-            value={formData.contato}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Pontos Fortes (separados por vírgula)</label>
-          <input
-            type="text"
-            name="pontosFortes"
-            value={formData.pontosFortes}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            placeholder="Ex: Massa fina, Forno a lenha, Delivery rápido"
-            required
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block mb-1">Nota da Massa (0-5)</label>
+          {/* Campo de Imagem */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Imagem</label>
             <input
-              type="number"
-              name="avaliacao.massa"
-              value={formData.avaliacao.massa}
+              type="file"
+              name="imagem"
+              accept="image/*"
               onChange={handleChange}
-              min="0"
-              max="5"
-              step="0.1"
-              className="w-full p-2 border rounded"
-              required
+              className={styles.inputFile}
             />
+            {errors.imagem && <span className={styles.error}>{errors.imagem}</span>}
           </div>
 
-          <div>
-            <label className="block mb-1">Nota do Recheio (0-5)</label>
-            <input
-              type="number"
-              name="avaliacao.recheio"
-              value={formData.avaliacao.recheio}
-              onChange={handleChange}
-              min="0"
-              max="5"
-              step="0.1"
-              className="w-full p-2 border rounded"
-              required
-            />
+          {/* Campos de Texto */}
+          <div className={styles.formGroup}>
+            {Object.keys(formData)
+              .filter(key => key !== 'imagem' && typeof formData[key] !== 'object')
+              .map(key => (
+                <div key={key} className={styles.formGroup}>
+                  <label className={styles.label}>
+                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                  </label>
+                  <input
+                    type="text"
+                    name={key}
+                    value={formData[key]}
+                    onChange={handleChange}
+                    className={styles.input}
+                  />
+                  {errors[key] && <span className={styles.error}>{errors[key]}</span>}
+                </div>
+              ))
+            }
           </div>
 
-          <div>
-            <label className="block mb-1">Nota do Tempero (0-5)</label>
-            <input
-              type="number"
-              name="avaliacao.tempero"
-              value={formData.avaliacao.tempero}
-              onChange={handleChange}
-              min="0"
-              max="5"
-              step="0.1"
-              className="w-full p-2 border rounded"
-              required
-            />
+          {/* Campo de Aplicativos */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Aplicativos</label>
+            <div className={styles.aplicativoGroup}>
+              {Object.keys(formData.aplicativo).map(field => (
+                <div key={field} className={styles.formGroup}>
+                  <label className={styles.label}>
+                    {field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                  </label>
+                  <input
+                    type="checkbox"
+                    name={`aplicativo.${field}`}
+                    checked={formData.aplicativo[field]}
+                    onChange={handleChange}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div>
-            <label className="block mb-1">Nota do Preço (0-5)</label>
-            <input
-              type="number"
-              name="avaliacao.preco"
-              value={formData.avaliacao.preco}
-              onChange={handleChange}
-              min="0"
-              max="5"
-              step="0.1"
-              className="w-full p-2 border rounded"
-              required
-            />
+          {/* Campos de Avaliação */}
+          <div className={styles.FormData}>
+            {Object.keys(formData.avaliacao).map(field => (
+              <div key={field} className={styles.formGroup}>
+                <label className={styles.label}>Nota do {field} (0-5)</label>
+                <input
+                  type="number"
+                  name={`avaliacao.${field}`}
+                  value={formData.avaliacao[field]}
+                  onChange={handleChange}
+                  min="0"
+                  max="5"
+                  step="0.1"
+                  className={styles.input}
+                />
+                {errors[`avaliacao.${field}`] && <span className={styles.error}>{errors[`avaliacao.${field}`]}</span>}
+              </div>
+            ))}
           </div>
-        </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Adicionar Pizzaria
-        </button>
-      </form>
-    </div>
+          {/* Botão de Envio */}
+          <button type="submit" className={styles.submitBtn}>Adicionar Pizzaria</button>
+        </form>
+      </div>
   );
 }

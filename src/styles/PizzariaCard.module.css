@@ -1,0 +1,50 @@
+/* Estiliza o cartão da pizzaria */
+.pizzaria-card {
+  display: flex;
+  flex-direction: column; /* Garante que os elementos dentro do cartão fiquem em coluna */
+  justify-content: space-between; /* Distribui o espaço entre os itens */
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  height: 100%; /* Garante que o cartão ocupe toda a altura disponível */
+}
+
+/* Estiliza a imagem da pizzaria */
+.img {
+  width: 100%; /* w-full */
+  height: 12rem; /* h-48 */
+  object-fit: cover; /* object-cover */
+  border-radius: 0.375rem; /* rounded */
+}
+
+/* Estiliza o nome da pizzaria */
+.nome {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  overflow: hidden; /* Impede que o nome ultrapasse o limite */
+  text-overflow: ellipsis; /* Adiciona "..." caso o nome seja muito longo */
+}
+
+/* Estiliza a seção da média geral */
+.rating {
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+  margin-top: auto; /* Garante que a avaliação sempre fique na parte inferior do card */
+}
+
+/* Estiliza o número da média geral */
+.rating span:first-child {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+/* Estiliza o texto "/ 5.0" */
+.scale {
+  color: #6b7280;
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+}

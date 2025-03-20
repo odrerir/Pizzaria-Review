@@ -2,9 +2,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { storageService } from '../services/storageService';
-import {RatingBar} from '../components/RatingBar';
+import { RatingBar } from '../components/RatingBar';
 
-import style from './PizzariaDetails.module.css';
+import styles from "../styles/PizzariaDetails.module.css";
 
 export function PizzariaDetails() {
   const { id } = useParams();
@@ -30,18 +30,18 @@ export function PizzariaDetails() {
 
   if (loading) {
     return (
-      <div className={style.loadingContainer}>
-        <div className={style.load}>Carregando...</div>
+      <div className={styles.loadingContainer}>
+        <div className={styles.load}>Carregando...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className={style.container}>
-        <div className={style.errorMessage}>
-          <p className={style.errorText}>{error}</p>
-          <button onClick={() => navigate('/')} className={style.backButton}>
+      <div className={styles.container}>
+        <div className={styles.errorMessage}>
+          <p className={styles.errorText}>{error}</p>
+          <button onClick={() => navigate('/')} className={styles.backButton}>
             Voltar para a página inicial
           </button>
         </div>
@@ -50,29 +50,29 @@ export function PizzariaDetails() {
   }
 
   return (
-    <div className={style.container}>
-      <button onClick={() => navigate(-1)} className={style.goBack}>
+    <div className={styles.container}>
+      <button onClick={() => navigate(-1)} className={styles.goBack}>
         ← Voltar
       </button>
 
-      <div className={style.card}>
-        <img src={pizzaria.imagem} alt={pizzaria.nome} className={style.image} />
+      <div className={styles.card}>
+        <img src={pizzaria.imagem} alt={pizzaria.nome} className={styles.image} />
 
-        <div className={style.content}>
-          <div className={style.header}>
-            <h1 className={style.title}>{pizzaria.nome}</h1>
-            <div className={style.rating}>
-              <div className={style.ratingNumber}>{pizzaria.mediaGeral.toFixed(1)}</div>
-              <div className={style.ratingText}>Média Geral</div>
+        <div className={styles.content}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>{pizzaria.nome}</h1>
+            <div className={styles.rating}>
+              <div className={styles.ratingNumber}>{pizzaria.mediaGeral.toFixed(1)}</div>
+              <div className={styles.ratingText}>Média Geral</div>
             </div>
           </div>
 
-          <p className={style.address}>{pizzaria.endereco}</p>
+          <p className={styles.address}>{pizzaria.endereco}</p>
 
-          <div className={style.grid}>
+          <div className={styles.grid}>
             <div>
-              <h2 className={style.sectionTitle}>Avaliações</h2>
-              <div className={style.spaceY}>
+              <h2 className={styles.sectionTitle}>Avaliações</h2>
+              <div className={styles.spaceY}>
                 <RatingBar label="Massa" value={pizzaria.avaliacao.massa} />
                 <RatingBar label="Recheio" value={pizzaria.avaliacao.recheio} />
                 <RatingBar label="Tempero" value={pizzaria.avaliacao.tempero} />
@@ -81,26 +81,26 @@ export function PizzariaDetails() {
             </div>
 
             <div>
-              <h2 className={style.sectionTitle}>Informações</h2>
-              <div className={style.spaceY}>
+              <h2 className={styles.sectionTitle}>Informações</h2>
+              <div className={styles.spaceY}>
                 <div>
-                  <h3 className={style.subTitle}>Descrição</h3>
-                  <p className={style.text}>{pizzaria.descricao}</p>
+                  <h3 className={styles.subTitle}>Descrição</h3>
+                  <p className={styles.text}>{pizzaria.descricao}</p>
                 </div>
 
                 <div>
-                  <h3 className={style.subTitle}>Horário de Funcionamento</h3>
-                  <p className={style.text}>{pizzaria.horarioFuncionamento}</p>
+                  <h3 className={styles.subTitle}>Horário de Funcionamento</h3>
+                  <p className={styles.text}>{pizzaria.horarioFuncionamento}</p>
                 </div>
 
                 <div>
-                  <h3 className={style.subTitle}>Contato</h3>
-                  <p className={style.text}>{pizzaria.contato}</p>
+                  <h3 className={styles.subTitle}>Contato</h3>
+                  <p className={styles.text}>{pizzaria.contato}</p>
                 </div>
 
                 <div>
-                  <h3 className={style.subTitle}>Pontos Fortes</h3>
-                  <ul className={style.list}>
+                  <h3 className={styles.subTitle}>Pontos Fortes</h3>
+                  <ul className={styles.list}>
                     {pizzaria.pontosFortes.map((ponto, index) => (
                       <li key={index}>{ponto}</li>
                     ))}
@@ -109,6 +109,19 @@ export function PizzariaDetails() {
               </div>
             </div>
           </div>
+
+          {/* Nova seção de aplicativos de delivery */}
+          {pizzaria.aplicativo && (
+            <div className={styles.aplicativoGroup}>
+              <h2 className={styles.sectionTitle}>Disponível em</h2>
+              <ul>
+                {pizzaria.aplicativo.ifood && <li>iFood</li>}
+                {pizzaria.aplicativo.rappi && <li>Rappi</li>}
+                {pizzaria.aplicativo.uberEats && <li>Uber Eats</li>}
+              </ul>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

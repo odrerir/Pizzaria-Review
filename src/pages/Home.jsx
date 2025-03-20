@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import {PizzariaCard} from '../components/PizzariaCard';
 import { storageService } from '../services/storageService';
 
-import styles from '../pages/Home.module.css';
+import styles from "../styles/Home.module.css";
 
 export function Home() {
   const [pizzarias, setPizzarias] = useState([]);
@@ -21,7 +21,9 @@ export function Home() {
       </header>
       <div className={styles.pizzarias}>
         {pizzarias.map(pizzaria => (
-          <PizzariaCard key={pizzaria.id} pizzaria={pizzaria} />
+          <PizzariaCard
+            key={pizzaria.id}
+            pizzaria={pizzaria} />
         ))}
       </div>
     </div>

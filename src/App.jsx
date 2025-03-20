@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Admin } from './pages/Admin';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { storageService } from './services/storageService';
-import {Home} from './pages/Home';
 
-import './App.css';
+import { PizzariaDetails } from './pages/PizzariaDetails';
+import { Ranking } from './pages/Ranking';
+import { Home } from './pages/Home';
+import { NavBar } from './components/NavBar';
+import { Admin } from './pages/Admin';
 
-storageService.initializeStorage();
+import './Global.css';
 
-function App() {
+export function App() {
+  // Inicializa o localStorage com dados mockados
+  useEffect(() => {
+    storageService.initializeStorage();
+  }, []);
+
   return (
     <Router>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/" className="navbar-link">Home</Link>
-          <Link to="/ranking" className="navbar-link">Ranking</Link>
-          <Link to="/admin" className="navbar-link">Adicionar Pizzaria</Link>
-        </div>
-      </nav>
+      <NavBar />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -30,5 +30,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

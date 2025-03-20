@@ -1,0 +1,63 @@
+/* Estilo da barra de navegação principal */
+.navbar {
+  background-color: #2d3748; /* bg-gray-800 */
+  color: white;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilo do container da navbar para centralizar o conteúdo */
+.navbarContainer {
+  max-width: 64rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo para os links da navbar */
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+  outline: none;
+}
+
+/* Estilo para cada link da navbar */
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+  outline: none; /* Remove a borda preta ao clicar */
+}
+
+.navLink:hover {
+  color: #b8bbbe;
+}
+
+/* Estilo do botão "Adicionar Pizzaria" */
+.addButton {
+  color: white;
+  background-color: #4c51bf;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.addButton:hover {
+  background-color: #434190;
+}
+
+@media (min-width: 768px) {
+  .navLink {
+    font-size: 1.2rem;
+  }
+
+  .addButton {
+    font-size: 1.2rem;
+  }
+
+}

@@ -1,0 +1,36 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Ajusta para que o conteúdo inicie no topo */
+  height: 100vh;
+  background-color: #f3f4f6;
+  padding-top: 2rem; /* Espaço superior */
+}
+
+.titulo{
+  font-size: 1.875rem; /* 3xl = 30px */
+  font-weight: 700; /* bold */
+  margin-bottom: 1.5rem; /* mb-6 = 24px */
+  padding-left: 1rem;
+}
+
+.pizzarias {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Layout padrão */
+  gap: 1.5rem; /* Espaçamento entre os cards */
+  padding: 0 16px; /* Espaçamento lateral (ajustável) */
+}
+
+/* Ajuste para telas maiores */
+@media (min-width: 640px) {
+  .pizzarias {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .pizzarias {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

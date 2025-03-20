@@ -1,0 +1,36 @@
+/* Estiliza o contêiner da barra de avaliação */
+.rating-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Equivalente a gap-4 */
+}
+
+/* Estiliza o rótulo da avaliação (ex: "Massa", "Recheio") */
+.label {
+  width: 5rem; /* Equivalente a w-20 */
+  font-weight: 500; /* Equivalente a font-medium */
+}
+
+/* Estiliza a barra de fundo */
+.bar-container {
+  flex: 1;
+  background-color: #e5e7eb; /* Equivalente a bg-gray-200 */
+  height: 1rem; /* Equivalente a h-4 */
+  border-radius: 9999px; /* Equivalente a rounded-full */
+  overflow: hidden;
+}
+
+/* Estiliza a barra de preenchimento */
+.bar-fill {
+  height: 100%;
+  background-color: #2563eb; /* Equivalente a bg-blue-600 */
+  border-radius: 9999px; /* Equivalente a rounded-full */
+  transition: width 0.3s ease-in-out;
+}
+
+/* Estiliza o valor numérico da avaliação */
+.value {
+  width: 3rem; /* Equivalente a w-12 */
+  text-align: right; /* Equivalente a text-right */
+  font-weight: bold; /* Equivalente a font-bold */
+}

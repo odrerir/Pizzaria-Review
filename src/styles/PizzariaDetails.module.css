@@ -151,3 +151,31 @@
   padding-left: 1.25rem;
   color: #4b5563;
 }
+
+/* SEÇÃO DE APLICATIVOS */
+.aplicativoGroup {
+  margin-top: 2rem;
+}
+
+.aplicativoGroup .sectionTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+}
+
+.aplicativoGroup ul {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+}
+
+.aplicativoGroup li {
+  background: #f3f4f6; /* Gray-200 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  color: #374151; /* Gray-700 */
+}

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { storageService } from '../services/storageService';
-import {RatingBar} from '../components/RatingBar';
+import {RatingBar} from '../components/RatingBar.jsx';
 
-import styles from '../styles/Ranking.module.css';
+import styles from "../styles/Ranking.module.css";
 
 export function Ranking() {
   const [pizzarias, setPizzarias] = useState([]);

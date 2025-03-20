@@ -1,0 +1,169 @@
+/* Remove a borda branca quando o input de texto ou textarea está focado */
+.form input[type="text"]:focus,
+.form textarea:focus {
+  outline: transparent;
+  box-shadow: 0 0 0 2px black;
+}
+
+/* Estilização geral do formulário */
+.form {
+  max-width: 64rem;
+  padding: 1rem;
+  margin: 1.5rem;
+  background-color: rgb(218, 218, 218);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho do formulário */
+.formHeader {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.formHeader h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Container principal do formulário */
+.formContainer {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* Ajuste dos grupos do formulário */
+.formGroup {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* Estilização das labels */
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Estilização dos inputs de texto */
+input {
+  width: 100%;
+  padding: 0.3rem;
+  border: none;
+  border-radius: 4px;
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+/* Estilização do input de arquivo */
+input[type="file"] {
+  display: flex;
+  gap: 0.5rem;
+  width: 80%;
+  font-size: 1rem;
+}
+
+/* Estilização do botão do seletor de arquivo */
+input[type="file"]::file-selector-button {
+  background-color: #4c51bf;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* Efeito hover no botão de seleção de arquivo */
+input[type="file"]::file-selector-button:hover {
+  background-color: #0056b3;
+}
+
+/* Grupo de checkboxes com layout flexível */
+.aplicativoGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Estilização dos checkboxes */
+input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+input[type="number"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Ajuste do textarea */
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  line-height: 1.4;
+  resize: vertical;
+  min-height: 100px;
+  max-height: 200px;
+}
+
+/* Estilização do botão de envio */
+.submitBtn {
+  background-color: #007bff;
+  width: 100%;
+  color: white;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Efeito hover no botão de envio */
+.submitBtn:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+/* Estilização de mensagens de erro */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .label {
+    font-size: 1.2rem;
+  }
+  input {
+    width: 100%;
+  }
+  input[type='file'] {
+    width: 100%;
+  }
+  .formContainer {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .formGroup {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+}
